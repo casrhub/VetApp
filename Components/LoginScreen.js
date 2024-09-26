@@ -1,13 +1,11 @@
-
-
 import React, { useState } from 'react';
 import {
   View,
   TextInput,
-  Button,
   Text,
   StyleSheet,
   TouchableOpacity,
+  Image, // Import Image for optional logo
 } from 'react-native';
 import { firebase } from '../firebase';
 
@@ -31,15 +29,32 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
+        {/* Optional: Add Logo/Image */}
+        {/* 
+        <Image 
+          source={require('../assets/logo.png')} 
+          style={styles.logo} 
+          resizeMode="contain" 
+        />
+        */}
+
+        {/* Title */}
+        <Text style={styles.title}>Welcome Back!</Text>
+
+        {/* Display Error Message */}
         {errorMsg ? <Text style={styles.error}>{errorMsg}</Text> : null}
 
+        {/* Email Input */}
         <TextInput
           placeholder="Email"
           onChangeText={setEmail}
           value={email}
           style={styles.input}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
 
+        {/* Password Input */}
         <TextInput
           placeholder="Password"
           onChangeText={setPassword}
@@ -48,12 +63,14 @@ export default function LoginScreen({ navigation }) {
           style={styles.input}
         />
 
+        {/* Login Button */}
         <TouchableOpacity style={styles.button} onPress={onLoginPress}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
+        {/* Sign Up Button */}
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, styles.signUpButton]} // Differentiate Sign Up button
           onPress={() => navigation.navigate('SignUp')}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
@@ -69,11 +86,11 @@ const styles = StyleSheet.create({
     flex: 1, // Take up the full screen
     justifyContent: 'center', // Center vertically
     alignItems: 'center', // Center horizontally
-    backgroundColor: '#f0f0f0', // Optional: light gray background
+    backgroundColor: '#f0f0f0', // Light gray background
   },
   box: {
-    width: '80%', // Adjust the width as needed
-    padding: 20,
+    width: '85%', // Increased width for better spacing
+    padding: 25, // Increased padding for more space
     borderRadius: 10,
     backgroundColor: '#fff', // White background for the box
     borderWidth: 1,
@@ -84,28 +101,51 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
   },
+  logo: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginBottom: 15, // Reduced margin for better spacing
+  },
+  title: {
+    fontSize: 28, // Suitable font size for a title
+    fontWeight: '700', // Bold text
+    color: '#333', // Dark color for readability
+    textAlign: 'center', // Center the title
+    marginBottom: 20, // Space below the title
+  },
   input: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: '#ccc', // Lighter border color
     borderWidth: 1,
     marginBottom: 15,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    paddingHorizontal: 15, // More padding inside the input
+    borderRadius: 8, // Rounded corners
+    fontSize: 16, // Increased font size for readability
   },
   error: {
     color: 'red',
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: 'center', // Center the error message
   },
   button: {
     backgroundColor: '#007AFF',
     paddingVertical: 15,
-    borderRadius: 5,
+    borderRadius: 8, // More rounded button
     marginBottom: 10,
     alignItems: 'center',
+    shadowColor: '#000', // Add shadow for iOS
+    shadowOffset: { width: 0, height: 2 }, // Shadow offset for iOS
+    shadowOpacity: 0.25, // Shadow opacity for iOS
+    shadowRadius: 3.84, // Shadow radius for iOS
+    elevation: 5, // Shadow for Android
+  },
+  signUpButton: {
+    backgroundColor: '#34C759', // Green color for Sign Up button
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18, // Increased font size
+    fontWeight: '600', // Semi-bold text
   },
 });
